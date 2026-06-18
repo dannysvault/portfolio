@@ -960,30 +960,40 @@
             <h2>Let's build something great together</h2>
             <p>From independent makers to growing trades, I build custom web tools that get real business results. Drop your project notes down below.</p>
 
-            <form action="#" method="POST">
-                <div class="form-row">
-                    <div class="input-group">
-                        <label for="name">Your Name</label>
-                        <input type="text" id="name" name="name" required placeholder="John Smith">
-                    </div>
-                    <div class="input-group">
-                        <label for="biz">Company Name</label>
-                        <input type="text" id="biz" name="company" placeholder="e.g. Tree Surgeon / Plumber">
-                    </div>
-                </div>
+            <form action="https://formsubmit.co/info@dmwebservices.co.uk" method="POST">
+    <!-- FormSubmit Anti-Spam Honeypot (Invisible to human users) -->
+    <input type="text" name="_honey" style="display:none">
+    
+    <!-- FormSubmit Dashboard Configurations -->
+    <input type="hidden" name="_subject" value="New Inquiry from DM Web Services!">
+    <input type="hidden" name="_template" value="table">
+    <input type="hidden" name="_next" value="https://dmwebservices.co.uk">
 
-                <div class="input-group">
-                    <label for="email">Email Address</label>
-                    <input type="email" id="email" name="email" required placeholder="john@example.com">
-                </div>
+    <div class="form-row">
+        <div class="input-group">
+            <label for="name">Your Name</label>
+            <!-- FormSubmit uses the "name" attribute to format your email alert -->
+            <input type="text" id="name" name="Client Name" required placeholder="John Smith">
+        </div>
+        <div class="input-group">
+            <label for="biz">Company Name</label>
+            <input type="text" id="biz" name="Company/Trade" placeholder="e.g. Tree Surgeon / Plumber">
+        </div>
+    </div>
 
-                <div class="input-group">
-                    <label for="message">Your Project Ideas</label>
-                    <textarea id="message" name="message" rows="5" required placeholder="Tell me a bit about what your business does and what you're looking for..."></textarea>
-                </div>
+    <div class="input-group">
+        <label for="email">Email Address</label>
+        <input type="email" id="email" name="email" required placeholder="john@example.com">
+    </div>
 
-                <button type="submit" class="btn-send">Send Message</button>
-            </form>
+    <div class="input-group">
+        <label for="message">Your Project Ideas</label>
+        <textarea id="message" name="Project Details" rows="5" required placeholder="Tell me a bit about what your business does and what you're looking for..."></textarea>
+    </div>
+
+    <button type="submit" class="btn-send">Send Message</button>
+</form>
+
         </div>
     </section>
 
