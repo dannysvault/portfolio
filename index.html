@@ -1,0 +1,1126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Danny Manning | Custom Web Design & Upkeep</title>
+    <!-- Google Fonts for the Footer Signature & Creative Typographic Variety -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Cinzel:wght@600&family=Courier+Prime:ital,wght@0,700;1,400&family=Playfair+Display:ital,wght@1,700&display=swap" rel="stylesheet">
+    <style>
+        /* --- BASE ARCHITECTURE & PALETTE --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: #F8F9F6; /* Warm organic white */
+            color: #1C1F1D; 
+            line-height: 1.6;
+            transition: background-color 0.8s cubic-bezier(0.25, 1, 0.5, 1), color 0.8s ease; 
+        }
+
+        body {
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Interactive Liquid Canvas Container */
+        #fluid-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 1s ease;
+        }
+
+        html.artist-mode #fluid-canvas {
+            opacity: 1;
+        }
+
+        /* --- GLOBAL LAYOUT CONTAINERS --- */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 40px 40px 20px 40px;
+            max-width: 1300px;
+            margin: 0 auto;
+            background: transparent;
+            position: relative;
+            z-index: 10;
+        }
+
+        section {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 75px 40px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Structure Lines (Gives depth so pages don't look bare) */
+        .grid-bg-line {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 1px;
+            background: rgba(0, 0, 0, 0.03);
+            z-index: 1;
+            pointer-events: none;
+        }
+        .line-left { left: 40px; }
+        .line-right { right: 40px; }
+
+        h1, h2, h3 {
+            letter-spacing: -0.03em;
+        }
+
+        /* --- ACTION TRIGGERS --- */
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .btn-toggle {
+            background: transparent;
+            border: 1px solid #1C1F1D;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.85rem;
+            padding: 10px 18px;
+            border-radius: 50px;
+            color: inherit;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .btn-toggle:hover {
+            background: #1C1F1D;
+            color: #F8F9F6;
+        }
+
+        .btn-chat {
+            text-decoration: none;
+            color: #F8F9F6;
+            background: #1C1F1D;
+            font-weight: 600;
+            font-size: 0.85rem;
+            padding: 10px 20px;
+            border-radius: 50px;
+            transition: all 0.25s ease;
+            white-space: nowrap;
+        }
+
+        .btn-chat:hover {
+            background: #484E4A;
+        }
+
+        .brand {
+            font-weight: 800;
+            font-size: 1.4rem;
+            letter-spacing: -0.03em;
+        }
+
+        /* --- HERO INTRO SECTION --- */
+        #intro {
+            padding-top: 60px;
+            padding-bottom: 60px;
+        }
+
+        .intro-container {
+            max-width: 900px;
+        }
+
+        .greeting {
+            display: block;
+            font-size: 0.9rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #626864; 
+            margin-bottom: 24px;
+        }
+
+        #intro h1 {
+            font-size: 3.8rem;
+            font-weight: 800;
+            line-height: 1.15;
+            margin-bottom: 30px;
+            color: #1C1F1D;
+        }
+
+        #intro p {
+            font-size: 1.35rem;
+            color: #484E4A;
+            margin-bottom: 40px;
+            max-width: 700px;
+        }
+
+        .btn-scroll {
+            display: inline-block;
+            text-decoration: none;
+            color: #1C1F1D; 
+            font-weight: 700;
+            font-size: 1.05rem;
+            border-bottom: 2px solid #1C1F1D;
+            padding-bottom: 4px;
+            transition: all 0.2s ease;
+        }
+
+        .btn-scroll:hover {
+            color: #626864;
+            border-color: #626864;
+        }
+
+        /* --- THE BALANCED CAPABILITIES PANEL (Pattern Background 1) --- */
+        #capabilities {
+            background: #F1F2EE; /* Clean alternative panel backing */
+            max-width: 100%;
+            padding-left: 0;
+            padding-right: 0;
+        }
+
+        .capabilities-wrapper {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 20px 40px;
+        }
+
+        .capabilities-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 20px;
+        }
+
+        .capability-card {
+            background: #ffffff;
+            padding: 40px;
+            border-radius: 2px; 
+            border-top: 3px solid #1C1F1D; 
+            display: flex;
+            flex-direction: column;
+            min-height: 240px;
+            transition: all 0.5s ease;
+        }
+
+        .cap-num {
+            font-size: 0.8rem;
+            font-weight: 700;
+            font-family: monospace; 
+            color: #8C928E;
+            margin-bottom: 24px;
+        }
+
+        .capability-card h4 {
+            font-size: 1.35rem;
+            font-weight: 800;
+            margin-bottom: 12px;
+        }
+
+        .capability-card p {
+            color: #525854;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        /* --- SINGLE SYSTEM DISPLAY CASE --- */
+        .section-meta {
+            max-width: 600px;
+            margin-bottom: 50px;
+        }
+
+        .section-meta h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 15px;
+        }
+
+        .section-meta p {
+            font-size: 1.1rem;
+            color: #525854;
+        }
+
+        .featured-case {
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 60px;
+            background: #ffffff;
+            padding: 60px;
+            border-radius: 4px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.015);
+            align-items: center;
+        }
+
+        .case-tag {
+            display: inline-block;
+            background: #1C1F1D;
+            padding: 4px 12px;
+            border-radius: 2px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #F8F9F6;
+            margin-bottom: 25px;
+        }
+
+        .case-details h3 {
+            font-size: 2.2rem;
+            margin-bottom: 30px;
+        }
+
+        .solution-points {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .point {
+            font-size: 1.05rem;
+            color: #484E4A;
+        }
+
+        .point strong {
+            color: #1C1F1D;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .btn-live {
+            display: inline-block;
+            text-decoration: none;
+            background: #1C1F1D;
+            color: #F8F9F6;
+            padding: 14px 30px;
+            border-radius: 4px;
+            font-weight: 600;
+            transition: background 0.2s;
+        }
+
+        .btn-live:hover {
+            background: #484E4A;
+        }
+
+        .browser-frame {
+            background: #141615; 
+            border-radius: 8px;
+            height: 380px;
+            padding: 15px 0 0 0; 
+            display: flex;
+            flex-direction: column;
+            overflow: hidden; 
+            box-shadow: 0 20px 40px rgba(0,0,0,0.04);
+        }
+
+        .frame-dots {
+            padding-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        .frame-dots span {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.2); 
+            margin-right: 6px;
+        }
+
+        .frame-image-wrapper {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .mock-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; 
+            object-position: top; 
+        }
+
+        /* --- OPERATIONS DEPLOYMENT (Pattern Background 2) --- */
+        #domain-concierge {
+            background: #F1F2EE; /* Recycled alternate background to link the design elements */
+            max-width: 100%;
+            padding-left: 0;
+            padding-right: 0;
+            border-top: 1px solid #E2E4E0;
+            border-bottom: 1px solid #E2E4E0;
+        }
+
+        .domain-wrapper {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 20px 40px;
+        }
+
+        .domain-container {
+            display: grid;
+            grid-template-columns: 1fr 1.1fr;
+            gap: 80px;
+            align-items: start;
+        }
+
+        .section-badge {
+            display: inline-block;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #626864;
+            margin-bottom: 20px;
+        }
+
+        .meta-side h2 {
+            font-size: 2.6rem;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 24px;
+        }
+
+        .meta-side p {
+            font-size: 1.15rem;
+            color: #484E4A;
+            margin-bottom: 40px; /* Enhanced space below link trigger text */
+        }
+
+        .btn-secondary {
+            display: inline-block;
+            text-decoration: none;
+            color: #1C1F1D;
+            font-weight: 700;
+            border-bottom: 2px solid #1C1F1D;
+            padding-bottom: 4px;
+            transition: all 0.2s;
+            margin-bottom: 20px; /* Creates explicit separation underneath */
+        }
+
+        .btn-secondary:hover {
+            color: #626864;
+            border-color: #626864;
+        }
+
+        .domain-features, .packages-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 35px;
+        }
+
+        /* Optimized padding for the structural lists to avoid cramping */
+        .feature-item, .package-item {
+            border-left: 3px solid #1C1F1D;
+            padding: 10px 0 10px 30px; 
+            background: #ffffff;
+            border-radius: 0 4px 4px 0;
+        }
+
+        .feature-item h5, .package-item h5 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .feature-item p, .package-item p {
+            color: #525854;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        /* --- MANAGEMENT AND REVIEWS PANELS --- */
+        #reviews-system, #management-packages {
+            border-bottom: 1px solid #E2E4E0;
+        }
+
+        .service-highlight-box {
+            background: #ffffff;
+            padding: 50px; /* Spacious content layouts */
+            border: 1px solid #E2E4E0;
+            border-left: 4px solid #1C1F1D;
+            border-radius: 4px;
+        }
+
+        .service-highlight-box h4 {
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 15px;
+        }
+
+        .service-highlight-box p {
+            color: #525854;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+
+        .business-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .business-list li {
+            font-size: 0.95rem;
+            color: #484E4A;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .business-list li::before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: #1C1F1D;
+            font-weight: 700;
+        }
+
+        /* --- ENGAGEMENT PORTAL --- */
+        .connect-box {
+            background: #1C1F1D;
+            color: #F8F9F6;
+            padding: 80px 60px;
+            border-radius: 4px;
+        }
+
+        .connect-box h2 {
+            font-size: 2.8rem;
+            margin-bottom: 20px;
+        }
+
+        .connect-box p {
+            max-width: 600px;
+            color: #A3A9A5;
+            font-size: 1.15rem;
+            margin-bottom: 50px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .input-group {
+            margin-bottom: 25px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .input-group label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #A3A9A5;
+        }
+
+        .input-group input,
+        .input-group textarea {
+            background: #2B302D;
+            border: 1px solid #3B423E;
+            padding: 16px;
+            border-radius: 2px;
+            color: #F8F9F6;
+            font-size: 1rem;
+            font-family: inherit;
+        }
+
+        .btn-send {
+            background: #F8F9F6;
+            color: #1C1F1D;
+            font-weight: 700;
+            font-size: 1.1rem;
+            padding: 16px 40px;
+            border: none;
+            border-radius: 2px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-send:hover {
+            background: #DCE0D9;
+        }
+
+        /* --- THE ARCHITECTURAL SIGNATURE FOOTER --- */
+        footer {
+            padding: 40px 40px;
+            border-top: 1px solid #E2E4E0;
+            max-width: 1300px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-text {
+            font-size: 0.85rem;
+            color: #8C928E;
+        }
+
+        .footer-signature {
+            font-family: 'Caveat', cursive;
+            font-size: 1.8rem;
+            color: #1C1F1D;
+            user-select: none;
+            transition: color 0.8s ease;
+        }
+
+        /* ==========================================================================
+           --- EXPRESSIVE EDITORIAL MODE (HIGH VISIBILITY LIGHT TEXT ON GLASS) ---
+           ========================================================================== */
+        
+        html.artist-mode {
+            background-color: transparent;
+            color: #FFFFFF;
+        }
+
+        /* Text Element Visibility Updates for Liquid Canvas Backdrop */
+        html.artist-mode #intro h1 {
+            font-family: "Impact", "Arial Black", sans-serif;
+            text-transform: uppercase;
+            font-size: 5.5rem;
+            line-height: 0.95;
+            transform: skewY(-2deg) rotate(-1deg);
+            text-align: right;
+            text-shadow: 4px 4px 0px #FF0055;
+            color: #FFFFFF;
+        }
+
+        html.artist-mode #intro p {
+            font-family: "Courier New", Courier, monospace;
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(12px);
+            padding: 25px;
+            border-left: 5px solid #00FFFF;
+            transform: translateX(40px);
+            color: #FFFFFF;
+        }
+
+        html.artist-mode .section-meta h2,
+        html.artist-mode .meta-side h2,
+        html.artist-mode .connect-box h2 {
+            font-family: "Georgia", serif;
+            font-style: italic;
+            font-weight: 300;
+            font-size: 3.8rem;
+            text-align: left;
+            letter-spacing: -2px;
+            color: #FFFFFF;
+        }
+
+        html.artist-mode .section-meta p,
+        html.artist-mode .meta-side p {
+            color: #E2E8F0;
+        }
+
+        /* Varied Typography Engine across the Core Cards */
+        html.artist-mode .capabilities-grid .capability-card:nth-child(1) h4 {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-weight: 700;
+            color: #00FFFF;
+        }
+        html.artist-mode .capabilities-grid .capability-card:nth-child(2) h4 {
+            font-family: 'Courier Prime', monospace;
+            font-weight: 700;
+            color: #FF0055;
+        }
+        html.artist-mode .capabilities-grid .capability-card:nth-child(3) h4 {
+            font-family: 'Cinzel', serif;
+            font-weight: 600;
+            color: #FFFF00;
+        }
+
+        html.artist-mode .capability-card {
+            background: rgba(10, 15, 12, 0.85); /* Increased contrast tinting */
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-top: 4px solid #00FFFF;
+            color: #FFFFFF;
+            transform: translateY(15px) rotate(-1deg);
+        }
+
+        html.artist-mode .capability-card p {
+            color: #E2E8F0; /* High legibility alternative text */
+        }
+
+        html.artist-mode .featured-case {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transform: scale(0.98) rotate(-0.5deg);
+            box-shadow: 0 40px 100px rgba(0,0,0,0.5);
+            color: #FFFFFF;
+        }
+
+        html.artist-mode .point, html.artist-mode .point strong {
+            color: #FFFFFF;
+        }
+
+        html.artist-mode .case-tag {
+            background: #FF0055;
+            color: #FFFFFF;
+            transform: rotate(-5deg);
+        }
+
+        html.artist-mode .browser-frame {
+            border: 2px solid #00FFFF;
+            transform: scale(1.05) rotate(2deg);
+        }
+
+        /* Feature items visibility alignment */
+        html.artist-mode .service-highlight-box,
+        html.artist-mode .package-item,
+        html.artist-mode .feature-item {
+            background: rgba(10, 15, 12, 0.85);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #FFFFFF;
+            border-left: 4px solid #FF0055;
+        }
+
+        html.artist-mode .feature-item h5, 
+        html.artist-mode .package-item h5,
+        html.artist-mode .service-highlight-box h4 {
+            color: #00FFFF;
+            font-family: monospace;
+        }
+
+        html.artist-mode .feature-item p, 
+        html.artist-mode .package-item p,
+        html.artist-mode .service-highlight-box p,
+        html.artist-mode .business-list li {
+            color: #E2E8F0;
+        }
+
+        html.artist-mode .business-list li::before {
+            color: #FF0055;
+        }
+
+        html.artist-mode .connect-box {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(25px);
+            border: 2px dashed rgba(255, 255, 255, 0.3);
+            transform: skewX(1deg);
+        }
+
+        html.artist-mode .btn-toggle {
+            background: #FFFFFF;
+            color: #000000;
+            border-color: #FFFFFF;
+            box-shadow: 0 0 15px #FFFFFF;
+        }
+
+        html.artist-mode .btn-chat {
+            background: #FF0055;
+            box-shadow: 0 0 15px #FF0055;
+        }
+
+        html.artist-mode .btn-live,
+        html.artist-mode .btn-send {
+            background: #00FFFF;
+            color: #000000;
+            font-family: monospace;
+        }
+
+        html.artist-mode .footer-signature {
+            color: #00FFFF;
+            text-shadow: 0 0 10px #00FFFF;
+        }
+
+        /* --- MOBILE LAYOUTS COMPRESSION MAPPING --- */
+        @media (max-width: 900px) {
+            section { padding: 60px 20px; }
+            
+            /* SQUASHED THE NAVIGATION LINE WRAPS */
+            header { 
+                padding: 20px; 
+                flex-direction: row;
+                justify-content: space-between;
+            }
+            .header-actions {
+                gap: 8px;
+            }
+            .btn-toggle, .btn-chat {
+                padding: 8px 14px;
+                font-size: 0.75rem;
+            }
+            
+            .line-left, .line-right { display: none; }
+            #intro h1 { font-size: 2.4rem; }
+            #intro p { font-size: 1.15rem; }
+            .capabilities-wrapper { padding: 20px; }
+            .featured-case { grid-template-columns: 1fr; padding: 30px 20px; gap: 40px; }
+            .browser-frame { height: 260px; }
+            .domain-wrapper { padding: 20px; }
+            .domain-container { grid-template-columns: 1fr; gap: 40px; }
+            .split-container, .split-container.reverse { grid-template-columns: 1fr; gap: 40px; }
+            .split-container.reverse .meta-side { order: -1; }
+            .connect-box { padding: 40px 20px; }
+            .form-row { grid-template-columns: 1fr; gap: 0; }
+            footer { flex-direction: column; gap: 20px; text-align: center; }
+
+            /* Strip the transform rules to make mobile look modern and sharp */
+            html.artist-mode #intro h1 { font-size: 2.6rem; text-align: left; transform: none; }
+            html.artist-mode #intro p { transform: none; }
+            html.artist-mode .capabilities-grid,
+            html.artist-mode .capability-card,
+            html.artist-mode .featured-case,
+            html.artist-mode .connect-box {
+                transform: none !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Liquid Mercury Layer Background -->
+    <canvas id="fluid-canvas"></canvas>
+
+    <!-- Structural Layout Accents -->
+    <div class="grid-bg-line line-left"></div>
+    <div class="grid-bg-line line-right"></div>
+
+    <!-- Header Block -->
+    <header>
+        <div class="brand">Danny Manning.</div>
+        <div class="header-actions">
+            <button id="theme-toggle" class="btn-toggle">🎨 Go Creative</button>
+            <a href="#connect" class="btn-chat">Let's Talk</a>
+        </div>
+    </header>
+
+    <!-- Main Intro Panel -->
+    <section id="intro">
+        <div class="intro-container">
+            <span class="greeting">Freelance Web Designer & Developer</span>
+            <h1>I build simple, custom websites that help your business grow.</h1>
+            <p>No complicated templates or technical headache. Just fast, easy-to-use websites built entirely by hand to look great and work perfectly on any phone, tablet, or computer screen.</p>
+            <a href="#capabilities" class="btn-scroll">See How I Help ↓</a>
+        </div>
+    </section>
+
+    <!-- Core Focus Points (Pattern Panel Background 1) -->
+    <section id="capabilities">
+        <div class="capabilities-wrapper">
+            <div class="capabilities-grid">
+                <div class="capability-card">
+                    <span class="cap-num">// 01</span>
+                    <h4>Clean, Hand-Coded Frameworks</h4>
+                    <p>I build custom pages using direct, lightweight code. This means your website stays quick and responsive, without the slow loading times of generic page-builders.</p>
+                </div>
+                <div class="capability-card">
+                    <span class="cap-num">// 02</span>
+                    <h4>Flawless Mobile Display</h4>
+                    <p>More than half of your customers visit using their phones. I map and build your layouts specifically to match smaller dimensions, ensuring an ultra-smooth experience.</p>
+                </div>
+                <div class="capability-card">
+                    <span class="cap-num">// 03</span>
+                    <h4>Complete Launch Setup</h4>
+                    <p>From cleaning up layouts to structuring easy contact pathways, I organize every piece of your setup so you don't have to stress about the tech details.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Showcase Grid -->
+    <section id="work">
+        <div class="section-meta">
+            <h2>Recent Work</h2>
+            <p>I design websites built for real-world industries. Take a look at a custom web layout engineered for a local home services group.</p>
+        </div>
+
+        <div class="featured-case">
+            <div class="case-details">
+                <span class="case-tag">Case Study: Trade Industry</span>
+                <h3>LWP Painting & Decorating</h3>
+                
+                <div class="solution-points">
+                    <div class="point">
+                        <strong>The Goal:</strong>
+                        Build an online gallery that shows off high-end craftsmanship while making it extremely easy for local customers to request a quote.
+                    </div>
+                    <div class="point">
+                        <strong>The Build:</strong>
+                        A clean, fast-loading grid system with compressed images, lightning-fast mobile speeds, and simple click-to-call buttons.
+                    </div>
+                </div>
+
+                <div class="case-actions">
+                    <a href="https://lwppaintingdecorating.co.uk" target="_blank" class="btn-live">View Live Project →</a>
+                </div>
+            </div>
+
+            <div class="case-visual">
+                <div class="browser-frame">
+                    <div class="frame-dots"><span></span><span></span><span></span></div>
+                    <div class="frame-image-wrapper">
+                        <img src="images/lwp-preview.jpg" alt="Custom website display mock" class="mock-image">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tech Handsoff Concierge (Pattern Panel Background 2) -->
+    <section id="domain-concierge">
+        <div class="domain-wrapper">
+            <div class="domain-container">
+                <div class="domain-meta">
+                    <span class="section-badge">Full Management Setup</span>
+                    <h2>Confused about domains and business email? Leave it to me.</h2>
+                    <p>Getting your company online shouldn't involve confusing tech terms or server setups. I look after the entire setup process from start to finish so you can keep focusing on your work.</p>
+                    <a href="#connect" class="btn-secondary">Secure your domain identity</a>
+                </div>
+                
+                <div class="domain-features">
+                    <div class="feature-item">
+                        <h5>🌐 Domain Registration & Setup</h5>
+                        <p>Finding the right address matters. I research available names, check matching options, and handle the secure purchase process. You simply cover the basic cost of the domain plus a small setup fee.</p>
+                    </div>
+                    <div class="feature-item">
+                        <h5>✉️ Professional Email Forwarding</h5>
+                        <p>Look like an established professional. I create custom mail redirects (like <em>info@yourbusiness.co.uk</em>) that route incoming client messages instantly and safely straight into your everyday inbox.</p>
+                    </div>
+                    <div class="feature-item">
+                        <h5>🛡️ Connection Management</h5>
+                        <p>I safely point your custom name toward fast hosting systems, testing configuration loops and links thoroughly so nobody gets a broken page error when trying to look you up.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reviews Implementation Operations -->
+    <section id="reviews-system">
+        <div class="split-container">
+            <div class="meta-side">
+                <span class="section-badge">Trust & Reviews</span>
+                <h2>Turn your past 5-star reviews into new business.</h2>
+                <p>Most local consumers read online reviews before booking a trade. I build clean, dedicated showcases that bring your best reviews from Google, Facebook, or consumer portals directly onto your page to build instant trust.</p>
+            </div>
+            <div class="content-side">
+                <div class="service-highlight-box">
+                    <h4>The Review Upkeep System</h4>
+                    <p>Websites shouldn't stay stuck displaying testimonials from years ago. With a simple monthly service plan, I curate, optimize, and update your newest customer shoutouts so your storefront always looks active and reliable.</p>
+                    <ul class="business-list">
+                        <li><strong>Multi-Channel Reviews:</strong> I manually format and structure your best feedback.</li>
+                        <li><strong>Regular Content Refreshes:</strong> Keep your latest work updates visible.</li>
+                        <li><strong>Clean Layout Integration:</strong> Reviews fit smoothly without slowing pages down.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Ongoing Retainer Management Care -->
+    <section id="management-packages">
+        <div class="split-container reverse">
+            <div class="meta-side">
+                <span class="section-badge">Peace-Of-Mind Support</span>
+                <h2>Regular updates and support. Zero website stress.</h2>
+                <p>Websites run best when they receive regular, ongoing care. Instead of leaving you to figure out updates yourself after your site goes live, I offer flat monthly or weekly maintenance plans to keep everything running perfectly.</p>
+                <a href="#connect" class="btn-secondary">Explore ongoing monthly care</a>
+            </div>
+            <div class="content-side">
+                <div class="packages-stack">
+                    <div class="package-item">
+                        <h5>📸 Fresh Photo & Project Additions</h5>
+                        <p>Finished a spectacular new commercial job? Just WhatsApp or email the photos over. I will crop, compress, optimize, and organize them nicely into your online portfolio rows.</p>
+                    </div>
+                    <div class="package-item">
+                        <h5>🔧 Information Tweaks & Price Adjustments</h5>
+                        <p>Need to update seasonal rates, edit your opening hours, add new services, or fix a phone number? Send a text and I will apply layout revisions within a fast 24–48 hour window.</p>
+                    </div>
+                    <div class="package-item">
+                        <h5>🛡️ Continuous Server & Domain Health Audits</h5>
+                        <p>I check structural connection rules, monitor your web host connections, and look after background renewals so your digital storefront stays up, fast, and healthy year-round.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Messaging Section -->
+    <section id="connect">
+        <div class="connect-box">
+            <h2>Let's build something great together</h2>
+            <p>From independent makers to growing trades, I build custom web tools that get real business results. Drop your project notes down below.</p>
+
+            <form action="#" method="POST">
+                <div class="form-row">
+                    <div class="input-group">
+                        <label for="name">Your Name</label>
+                        <input type="text" id="name" name="name" required placeholder="John Smith">
+                    </div>
+                    <div class="input-group">
+                        <label for="biz">Company Name</label>
+                        <input type="text" id="biz" name="company" placeholder="e.g. Tree Surgeon / Plumber">
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" required placeholder="john@example.com">
+                </div>
+
+                <div class="input-group">
+                    <label for="message">Your Project Ideas</label>
+                    <textarea id="message" name="message" rows="5" required placeholder="Tell me a bit about what your business does and what you're looking for..."></textarea>
+                </div>
+
+                <button type="submit" class="btn-send">Send Message</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer Space with Architectural Signature -->
+    <footer>
+        <div class="footer-text">
+            <p>&copy; 2026 Danny Manning. Clean Hand-Coded Web Design. All Rights Reserved.</p>
+        </div>
+        <div class="footer-signature">Danny Manning</div>
+    </footer>
+
+    <!-- INTERACTIVE LIQUID MERCURY / METAL GLASS RENDER ENGINE -->
+    <script>
+        const toggleBtn = document.getElementById('theme-toggle');
+        const rootHtml = document.documentElement;
+        const canvas = document.getElementById('fluid-canvas');
+        const ctx = canvas.getContext('2d');
+
+        // --- THEME CONVERSION LISTENER ---
+        toggleBtn.addEventListener('click', () => {
+            rootHtml.classList.toggle('artist-mode');
+            if (rootHtml.classList.contains('artist-mode')) {
+                toggleBtn.textContent = '💼 Go Professional';
+            } else {
+                toggleBtn.textContent = '🎨 Go Creative';
+            }
+        });
+
+        // --- RENDER DYNAMICS LOOP ---
+        let width = canvas.width = window.innerWidth;
+        let height = canvas.height = window.innerHeight;
+
+        let mouse = { x: width / 2, y: height / 2, targetX: width / 2, targetY: height / 2 };
+        
+        window.addEventListener('mousemove', (e) => {
+            mouse.targetX = e.clientX;
+            mouse.targetY = e.clientY;
+        });
+
+        window.addEventListener('touchmove', (e) => {
+            if(e.touches.length > 0) {
+                mouse.targetX = e.touches[0].clientX;
+                mouse.targetY = e.touches[0].clientY;
+            }
+        });
+
+        window.addEventListener('resize', () => {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        });
+
+        // Liquid Node Arrays
+        const points = [];
+        for (let i = 0; i < 18; i++) {
+            points.push({
+                x: Math.random() * width,
+                y: Math.random() * height,
+                vx: (Math.random() - 0.5) * 2.5,
+                vy: (Math.random() - 0.5) * 2.5,
+                radius: Math.random() * 90 + 60
+            });
+        }
+
+        function renderLiquidMercury() {
+            if (!rootHtml.classList.contains('artist-mode')) {
+                requestAnimationFrame(renderLiquidMercury);
+                return;
+            }
+
+            // Magnetic Cursor Attraction Easing
+            mouse.x += (mouse.targetX - mouse.x) * 0.08;
+            mouse.y += (mouse.targetY - mouse.y) * 0.08;
+
+            ctx.clearRect(0, 0, width, height);
+
+            // Metallic Dark Deep Glass Backdrop Base
+            let baseGrad = ctx.createLinearGradient(0, 0, width, height);
+            baseGrad.addColorStop(0, '#0a0d1a');
+            baseGrad.addColorStop(0.5, '#120a1c');
+            baseGrad.addColorStop(1, '#040406');
+            ctx.fillStyle = baseGrad;
+            ctx.fillRect(0, 0, width, height);
+
+            // Render flowing distortable metallic blobs
+            points.forEach((p, idx) => {
+                p.x += p.vx;
+                p.y += p.vy;
+
+                // Border boundaries bounces
+                if (p.x < 0 || p.x > width) p.vx *= -1;
+                if (p.y < 0 || p.y > height) p.vy *= -1;
+
+                // Magnetic pull toward cursor
+                let dx = mouse.x - p.x;
+                let dy = mouse.y - p.y;
+                let dist = Math.sqrt(dx * dx + dy * dy);
+                if (dist < 450) {
+                    p.x += (dx / dist) * 1.5;
+                    p.y += (dy / dist) * 1.5;
+                }
+
+                // Node Radial Gradients for Chrome Shimmer Effect
+                let blobGrad = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.radius);
+                
+                if (idx % 3 === 0) {
+                    blobGrad.addColorStop(0, 'rgba(0, 255, 240, 0.45)');
+                    blobGrad.addColorStop(0.4, 'rgba(120, 0, 255, 0.15)');
+                } else if (idx % 3 === 1) {
+                    blobGrad.addColorStop(0, 'rgba(255, 0, 110, 0.4)');
+                    blobGrad.addColorStop(0.5, 'rgba(40, 0, 100, 0.1)');
+                } else {
+                    blobGrad.addColorStop(0, 'rgba(230, 240, 255, 0.35)');
+                    blobGrad.addColorStop(0.6, 'rgba(20, 30, 80, 0.05)');
+                }
+                blobGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+
+                ctx.fillStyle = blobGrad;
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                ctx.fill();
+            });
+
+            // Tracking Glass Reflection Core Overlay
+            let mouseLight = ctx.createRadialGradient(mouse.x, mouse.y, 10, mouse.x, mouse.y, 250);
+            mouseLight.addColorStop(0, 'rgba(255, 255, 255, 0.25)');
+            mouseLight.addColorStop(0.5, 'rgba(0, 255, 240, 0.05)');
+            mouseLight.addColorStop(1, 'rgba(0,0,0,0)');
+            ctx.fillStyle = mouseLight;
+            ctx.beginPath();
+            ctx.arc(mouse.x, mouse.y, 250, 0, Math.PI * 2);
+            ctx.fill();
+
+            requestAnimationFrame(renderLiquidMercury);
+        }
+
+        // Initialize execution loops
+        renderLiquidMercury();
+    </script>
+</body>
+</html>
