@@ -645,6 +645,62 @@
 
     .footer-inner strong { color: var(--ink); }
 
+/* Original working contact form classes, styled to match the new design */
+#connect {
+  width: min(var(--max), calc(100% - 40px));
+  margin-inline: auto;
+}
+
+.connect-box {
+  background:
+    linear-gradient(135deg, rgba(183,255,115,.18), transparent 38%),
+    var(--ink);
+  color: var(--paper);
+  border-radius: var(--radius-lg);
+  padding: clamp(28px, 5vw, 58px);
+}
+
+.connect-box h2 {
+  font-size: clamp(2.25rem, 4.8vw, 4.8rem);
+  max-width: 760px;
+}
+
+.connect-box > p {
+  color: #c9d2cc;
+  margin-top: 18px;
+  margin-bottom: 30px;
+  max-width: 680px;
+  font-size: 1.08rem;
+}
+
+.input-group {
+  margin-bottom: 14px;
+}
+
+.btn-send {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  min-height: 46px;
+  padding: 12px 18px;
+  border-radius: 999px;
+  text-decoration: none;
+  font-weight: 850;
+  border: 1px solid transparent;
+  transition: transform .2s ease, background .2s ease, border-color .2s ease;
+  cursor: pointer;
+  font-family: inherit;
+  background: var(--accent);
+  color: var(--ink);
+  font-size: 1rem;
+}
+
+.btn-send:hover {
+  transform: translateY(-2px);
+  background: #c7ff91;
+}
+
     @media (max-width: 980px) {
       .hero-grid,
       .pain-panel,
@@ -710,10 +766,10 @@
         <li><a href="#services">Services</a></li>
         <li><a href="#work">Work</a></li>
         <li><a href="#process">Process</a></li>
-        <li><a href="#contact">Contact</a></li>
+        <li><a href="#connect">Contact</a></li>
       </ul>
 
-      <a href="#contact" class="btn btn-primary">Free website chat</a>
+      <a href="#connect" class="btn btn-primary">Free website chat</a>
     </nav>
   </header>
 
@@ -726,7 +782,7 @@
           <p class="lead">I help trades, sole traders and small companies get online with fast, mobile-friendly websites that showcase their work, build trust and make enquiries easy.</p>
 
           <div class="hero-actions">
-            <a href="#contact" class="btn btn-accent">Tell me about your business</a>
+            <a href="#connect" class="btn btn-accent">Tell me about your business</a>
             <a href="#work" class="btn btn-outline">View recent work</a>
           </div>
 
@@ -901,44 +957,39 @@
       </div>
     </section>
 
-    <section id="contact" aria-labelledby="contact-heading">
-      <div class="container contact-panel">
-        <div>
-          <span class="eyebrow">Start here</span>
-          <h2 id="contact-heading">Need a simple website for your business?</h2>
-          <p>Send me a few details and I’ll get back to you with honest advice on the best next step. No pressure, no confusing tech talk.</p>
-          <div class="contact-options">
-            <span>Best for: trades, local services, sole traders and small companies.</span>
-            <span>Email: <a href="/cdn-cgi/l/email-protection#99f1fcf5f5f6d9fdf4eefcfbeafcebeff0fafceab7faf6b7ecf2"><span class="__cf_email__" data-cfemail="355d5059595a755158425057465047435c5650461b565a1b405e">[email&#160;protected]</span></a></span>
-          </div>
+   <!-- Messaging Section -->
+<section id="connect">
+  <div class="connect-box">
+    <h2>Let's build something great together</h2>
+    <p>From independent makers to growing trades, I build custom web tools that get real business results. Drop your project notes down below.</p>
+
+    <form action="#" method="POST">
+      <div class="form-row">
+        <div class="input-group">
+          <label for="name">Your Name</label>
+          <input type="text" id="name" name="name" required placeholder="John Smith">
         </div>
 
-        <form action="#" method="POST">
-          <div class="form-row">
-            <div class="field">
-              <label for="name">Your Name</label>
-              <input id="name" name="name" type="text" placeholder="John Smith" autocomplete="name" required />
-            </div>
-            <div class="field">
-              <label for="biz">Company Name</label>
-              <input id="biz" name="company" type="text" placeholder="e.g. Tree Surgeon / Plumber" autocomplete="organization" />
-            </div>
-          </div>
-
-          <div class="field">
-            <label for="email">Email Address</label>
-            <input id="email" name="email" type="email" placeholder="john@example.com" autocomplete="email" required />
-          </div>
-
-          <div class="field">
-            <label for="message">Your Project Ideas</label>
-            <textarea id="message" name="message" placeholder="Tell me a bit about what your business does and what you're looking for..." required></textarea>
-          </div>
-
-          <button type="submit" class="btn btn-accent">Send Message</button>
-        </form>
+        <div class="input-group">
+          <label for="biz">Company Name</label>
+          <input type="text" id="biz" name="company" placeholder="e.g. Tree Surgeon / Plumber">
+        </div>
       </div>
-    </section>
+
+      <div class="input-group">
+        <label for="email">Email Address</label>
+        <input type="email" id="email" name="email" required placeholder="john@example.com">
+      </div>
+
+      <div class="input-group">
+        <label for="message">Your Project Ideas</label>
+        <textarea id="message" name="message" rows="5" required placeholder="Tell me a bit about what your business does and what you're looking for..."></textarea>
+      </div>
+
+      <button type="submit" class="btn-send">Send Message</button>
+    </form>
+  </div>
+</section>
   </main>
 
   <footer class="site-footer">
